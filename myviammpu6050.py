@@ -3,7 +3,7 @@
 from mpu6050 import mpu6050
 import time 
 import asyncio
-from typing import Any, Dict, Optional
+from typing import Any
 from viam.components.sensor import Sensor
 
 class ExampleSensor(Sensor):
