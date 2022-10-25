@@ -11,10 +11,7 @@ from viam.components.sensor import Sensor
 
 class myviammpu6050(Sensor):
     def __init__(self, name: str):
-        sensor = mpu6050(0x68) 
-        x = 0
-        y = 0
-        z = 0
+        self.sensor = mpu6050(0x68) 
         self.num_readings = sensor.get_accel_data()
         super().__init__(name)
 
