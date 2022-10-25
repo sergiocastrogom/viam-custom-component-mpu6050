@@ -19,4 +19,4 @@ class myviammpu6050(Sensor):
         super().__init__(name)
 
     async def get_readings(self, **kwargs) -> Mapping[str, Any]:
-        return {"MPU6050 Readings"[idx]: sensor.get_accel_data() for idx in range(self.num_readings)}
+        return {"MPU6050 Accel Readings"[idx]: sensor.get_accel_data() for idx in range(self.num_readings)}
