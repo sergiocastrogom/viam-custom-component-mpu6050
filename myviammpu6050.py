@@ -1,0 +1,104 @@
+from mpu6050 import mpu6050
+import time 
+
+sensor = mpu6050(0x68) 
+def mpu6050test():
+x = 0
+y = 0
+z = 0
+for i in range(0,10):
+    accelerometer_data = sensor.get_accel_data()
+    x = x + accelerometer_data['x'] #first axis
+    y = y + accelerometer_data['y']
+    z = z + accelerometer_data['z'] 
+print('X=%.3f, Y=%.3f, Z=%.3f'%(x/10.0,y/10.0,z/10.0)) 
+time.sleep(0.3)
+
+
+if __name__ == "__main__": 
+    try:
+        while True:
+            mpu6050test()
+    except:
+        pass
+
+
+# my-python-robot/my_cool_arm.py
+
+import asyncio
+from typing import Any, Dict, Optional
+from viam.components.arm import Arm, JointPositions, Pose, WorldState
+from viam.operations import run_with_operation
+
+
+class MyCoolArm(Arm):
+    # Subclass the Viam Arm component and implement the required functions
+
+    def __init__(self, name: str):
+        # Starting position
+        self.position = Pose(
+            x=0,
+            y=0,
+            z=0,
+            o_x=0,
+            o_y=0,
+            o_z=0,
+            theta=0,
+        )
+
+        # Starting joint positions
+        self.joint_positions = JointPositions(values=[0, 0, 0, 0, 0, 0])
+        self.is_stopped = True
+        super().__init__(name)
+
+    async def get_end_position(self, extra: Optional[Dict[str, Any]] = None, **kwargs) -> Pose:
+        return self.position
+
+    @run_with_operation
+    async def move_to_position(
+        self,
+        pose: Pose,
+        world_state: Optional[WorldState] = None,
+        extra: Optional[Dict[str, Any]] = None,
+        **kwargs,
+    ):
+        operation = self.get_operation(kwargs)
+
+        self.is_stopped = False
+        self.position = pose
+
+        # Simulate the length of time it takes for the arm to move to its new position
+        for x in range(10):
+            await asyncio.sleep(1)
+
+            # Check if the operation is cancelled and, if it is, stop the arm's motion
+            if await operation.is_cancelled():
+                await self.stop()
+                break
+
+        self.is_stopped = True
+
+    async def get_joint_positions(self, extra: Optional[Dict[str, Any]] = None, **kwargs) -> JointPositions:
+        return self.joint_positions
+
+    @run_with_operation
+    async def move_to_joint_positions(self, positions: JointPositions, extra: Optional[Dict[str, Any]] = None, **kwargs):
+        operation = self.get_operation(kwargs)
+
+        self.is_stopped = False
+        self.joint_positions = positions
+
+        # Simulate the length of time it takes for the arm to move to its new joint position
+        for x in range(10):
+            await asyncio.sleep(1)
+
+            # Check if the operation is cancelled and, if it is, stop the arm's motion
+            if await operation.is_cancelled():
+                await self.stop()
+                break
+
+        self.is_stopped = True
+
+    async def stop(self, extra: Optional[Dict[str, Any]] = None, **kwargs):
+        self.is_stopped = True
+
