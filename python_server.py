@@ -7,6 +7,7 @@ from my_viam_mpu6050 import myviammpu6050
 
 async def main():
     srv = Server([myviammpu6050('my-MPU6050')])
+    await srv.serve()
 
 if __name__ == '__main__':
     try:
