@@ -1,5 +1,8 @@
-# Based on https://github.com/viamrobotics/viam-python-sdk/blob/main/examples/server/v1/components.py
-# using the module described in https://github.com/m-rtijn/mpu6050
+# See:
+# https://python.viam.dev/examples/example.html#create-custom-components
+# https://github.com/viamrobotics/viam-python-sdk
+# using the MPU module in https://github.com/m-rtijn/mpu6050
+
 from mpu6050 import mpu6050
 import time 
 import asyncio
