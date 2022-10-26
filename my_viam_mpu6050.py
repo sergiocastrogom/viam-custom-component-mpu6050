@@ -11,9 +11,9 @@ from viam.components.sensor import Sensor
 
 class myviammpu6050(Sensor):
     def __init__(self, name: str):
-        self.sensor = mpu6050(0x68) 
+        self.sensorMPU = mpu6050(0x68) 
         self.num_readings = sensor.get_accel_data()
         super().__init__(name)
 
     async def get_readings(self, **kwargs) -> Mapping[str, Any]:
-        return {"MPU6050 Accel Readings"[idx]: self.sensor.get_accel_data() for idx in range(self.num_readings)}
+        return {"MPU6050 Accel Readings"[idx]: self.sensorMPU.get_accel_data() for idx in range(self.num_readings)}
