@@ -6,7 +6,7 @@
 from mpu6050 import mpu6050
 import time 
 import asyncio
-from typing import Any
+from typing import Any, Mapping
 from viam.components.sensor import Sensor
 
 class myviammpu6050(Sensor):
