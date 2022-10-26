@@ -14,3 +14,13 @@ if __name__ == '__main__':
         asyncio.run(main())
     except:
         pass
+    
+# To use this custom server as part of a larger robot, you’ll want to add it as a remote in the config for your main part.
+
+# [
+#  {
+#    "address": "localhost:9090",
+#    "name": "my-own-robot",
+#    "insecure": true
+#  }
+# ]
