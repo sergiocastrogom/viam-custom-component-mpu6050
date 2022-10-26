@@ -12,7 +12,7 @@ from viam.components.sensor import Sensor
 class myviammpu6050(Sensor):
     def __init__(self, name: str):
         self.sensorMPU = mpu6050(0x68) 
-        self.num_readings = sensor.get_accel_data()
+        self.num_readings = self.sensorMPU.get_accel_data()
         super().__init__(name)
 
     async def get_readings(self, **kwargs) -> Mapping[str, Any]:
